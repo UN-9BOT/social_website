@@ -1,6 +1,22 @@
 """Формы."""
 from django import forms
 from django.contrib.auth.models import User
+from .models import Profile
+
+
+class UserEditForm(forms.ModelForm):
+    """форма для редактирования информации для встроенной модели User."""
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class ProfileEditForm(forms.ModelForm):
+    """Редактирование данных в форме Profile."""
+    class Meta:
+        model = Profile
+        fields = ['date_of_birth', 'photo']
 
 
 class LoginForm(forms.Form):
