@@ -3,16 +3,29 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 
 
-def user_login(request: HttpRequest) -> Optional[HttpResponse]:
+@login_required
+def dashboard(request: HttpRequest) -> HttpResponse:
+    """
+    Если в запросе нет параметра next перенаправляет их на дашбоард.
+
+    Для этого в templates определен атрибут next.
+    """
+    if request.user.is_authenticated:
+        print("***\nye\n***")
+    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+
+
+def user_login(request: HttpRequest) -> HttpResponse:
     """
     Вход в систему.
 
     GET: создание экземпляра новой формы входа и передача в шаблон.
 
-    POST: 
+    POST:
         1. Забор данных из запроса и создание экземпляра формы.
         2. Валидация.
         3. Аутентификация. Если пользователь существует то возвращает обьект
