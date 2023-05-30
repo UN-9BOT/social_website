@@ -34,6 +34,10 @@ LOGOUT_URL = 'logout'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.autn.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+    ]
 
 MEDIA_URL = 'media/'  # базовый url для медиафайлов
 MEDIA_ROOT = BASE_DIR / 'media'  # локальный путь хранения
